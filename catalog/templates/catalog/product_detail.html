@@ -1,0 +1,86 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} — Spices Minsk{% endblock %}
+
+{% block content %}
+
+<section class="page-hero page-hero--short">
+    <div class="container">
+        <p class="breadcrumbs">
+            <a href="{% url 'catalog:index' %}">Главная</a>
+            <span class="breadcrumbs__sep">/</span>
+            <a href="{% url 'catalog:catalog' %}">Каталог</a>
+            <span class="breadcrumbs__sep">/</span>
+            <a href="{% url 'catalog:catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
+        </p>
+    </div>
+</section>
+
+<section class="section container">
+    <div class="product-detail">
+        <div class="product-detail__gallery">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail__img">
+            {% else %}
+            <div class="product-detail__placeholder">
+                <span>✦</span>
+                <p>{{ product.name }}</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="product-detail__info">
+            <h1 class="product-detail__title">{{ product.name }}</h1>
+            {% if product.origin %}
+            <p class="product-detail__origin">{{ product.origin }}</p>
+            {% endif %}
+            <p class="product-detail__price">{{ product.price }} Br</p>
+            {% if product.weight %}
+            <p class="product-detail__weight">Вес: {{ product.weight }}</p>
+            {% endif %}
+            <div class="product-detail__status">
+                {% if product.in_stock %}
+                <span class="status status--in-stock">В наличии</span>
+                {% else %}
+                <span class="status status--out-of-stock">Нет в наличии</span>
+                {% endif %}
+            </div>
+
+            {% if product.description %}
+            <div class="product-detail__desc">
+                <h3>Описание</h3>
+                <p>{{ product.description|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% if related_products %}
+<section class="section section--light">
+    <div class="container">
+        <h2 class="section__title">Похожие товары</h2>
+        <div class="products-grid">
+            {% for related in related_products %}
+            <a href="{{ related.get_absolute_url }}" class="product-card">
+                <div class="product-card__img-wrap">
+                    {% if related.image %}
+                    <img src="{{ related.image.url }}" alt="{{ related.name }}" class="product-card__img">
+                    {% else %}
+                    <div class="product-card__placeholder">
+                        <span>✦</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="product-card__body">
+                    <h3 class="product-card__title">{{ related.name }}</h3>
+                    <p class="product-card__price">{{ related.price }} Br</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

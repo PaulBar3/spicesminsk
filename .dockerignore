@@ -1,0 +1,14 @@
+.venv/
+.venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.pytest_cache/
+.python-version
+*.sqlite3
+media/
+.env
+.idea/
+.vscode/
+README.md

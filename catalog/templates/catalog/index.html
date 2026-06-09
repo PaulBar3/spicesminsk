@@ -1,0 +1,85 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}Spices Minsk — Каталог специй и пряностей{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content container">
+        <h1 class="hero__title">Специи со всего мира</h1>
+        <p class="hero__subtitle">Откройте для себя богатство вкусов и ароматов. Только натуральные специи высшего качества.</p>
+        <a href="{% url 'catalog:catalog' %}" class="btn btn--primary">Перейти в каталог</a>
+    </div>
+</section>
+
+<section class="section container">
+    <h2 class="section__title">Категории</h2>
+    <p class="section__subtitle">Исследуйте наши коллекции</p>
+    <div class="categories-grid">
+        {% for category in categories %}
+        <a href="{% url 'catalog:catalog' %}?category={{ category.slug }}" class="category-card">
+            {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" class="category-card__img">
+            {% else %}
+            <div class="category-card__placeholder">
+                <span class="category-card__emoji">✦</span>
+            </div>
+            {% endif %}
+            <div class="category-card__overlay">
+                <h3 class="category-card__title">{{ category.name }}</h3>
+                <span class="category-card__count">{{ category.products.count }} товаров</span>
+            </div>
+        </a>
+        {% empty %}
+        <p class="empty-msg">Категории скоро появятся</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section section--light">
+    <div class="container">
+        <h2 class="section__title">Новинки</h2>
+        <p class="section__subtitle">Попробуйте что-то новое</p>
+        <div class="products-grid">
+            {% for product in products %}
+            <a href="{{ product.get_absolute_url }}" class="product-card">
+                <div class="product-card__img-wrap">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__img">
+                    {% else %}
+                    <div class="product-card__placeholder">
+                        <span>✦</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="product-card__body">
+                    <h3 class="product-card__title">{{ product.name }}</h3>
+                    <p class="product-card__price">{{ product.price }} Br</p>
+                    {% if product.weight %}
+                    <span class="product-card__weight">{{ product.weight }}</span>
+                    {% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <p class="empty-msg">Товары скоро появятся</p>
+            {% endfor %}
+        </div>
+        <div class="section__action">
+            <a href="{% url 'catalog:catalog' %}" class="btn btn--outline">Смотреть все товары</a>
+        </div>
+    </div>
+</section>
+
+<section class="section about-preview">
+    <div class="container about-preview__inner">
+        <div class="about-preview__text">
+            <h2 class="section__title section__title--left">О нас</h2>
+            <p>Мы — команда энтузиастов, которые любят специи и знают о них всё. Отбираем лучшие сорта со всего мира, чтобы вы могли создавать кулинарные шедевры.</p>
+            <a href="{% url 'catalog:about' %}" class="btn btn--primary">Узнать больше</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

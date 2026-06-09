@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - DEBUG=False
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin
+    volumes:
+      - data:/app/data
+      - media:/app/media
+      - static_volume:/app/static
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  nginx:
+    build: nginx/
+    volumes:
+      - static_volume:/app/static:ro
+      - media:/app/media:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  data:
+  media:
+  static_volume:

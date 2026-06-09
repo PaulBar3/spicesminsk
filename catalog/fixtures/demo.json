@@ -1,0 +1,312 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Одиночные специи",
+      "slug": "odinichnye-specii",
+      "description": "Классические специи в чистом виде: от чёрного перца до шафрана.",
+      "image": null,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Смеси специй",
+      "slug": "smesi-specij",
+      "description": "Готовые купажи для разных блюд: от плова до стейка.",
+      "image": null,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Травы",
+      "slug": "travy",
+      "description": "Ароматные травы для салатов, супов и горячих блюд.",
+      "image": null,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Экзотические специи",
+      "slug": "ekzoticheskie-specii",
+      "description": "Редкие и необычные специи со всего света.",
+      "image": null,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Чаи и напитки",
+      "slug": "chai-i-napitki",
+      "description": "Травяные чаи, пряности для глинтвейна и других напитков.",
+      "image": null,
+      "created_at": "2026-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Перец чёрный молотый",
+      "slug": "perec-chyornyj-molotyj",
+      "description": "Ароматный чёрный перец высшего сорта. Идеально подходит для мясных и овощных блюд.",
+      "image": null,
+      "price": "4.50",
+      "weight": "50 г",
+      "origin": "Вьетнам",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Куркума молотая",
+      "slug": "kurkuma-molotaya",
+      "description": "Яркая жёлтая куркума из Индии. Придаёт блюдам золотистый цвет и тонкий аромат.",
+      "image": null,
+      "price": "5.00",
+      "weight": "50 г",
+      "origin": "Индия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "name": "Корица цейлонская",
+      "slug": "korica-cejlonskaya",
+      "description": "Натуральная корица из Шри-Ланки. Сладковатый, тёплый аромат для выпечки и напитков.",
+      "image": null,
+      "price": "8.00",
+      "weight": "30 г",
+      "origin": "Шри-Ланка",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "category": 1,
+      "name": "Паприка сладкая",
+      "slug": "paprika-sladkaya",
+      "description": "Сладкая молотая паприка из Венгрии. Классика для гуляша и рагу.",
+      "image": null,
+      "price": "4.00",
+      "weight": "50 г",
+      "origin": "Венгрия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "category": 1,
+      "name": "Шафран иранский",
+      "slug": "shafran-iranskij",
+      "description": "Король специй. Натуральный шафран из Ирана. Придаёт блюдам тонкий аромат и золотистый цвет.",
+      "image": null,
+      "price": "25.00",
+      "weight": "2 г",
+      "origin": "Иран",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "category": 2,
+      "name": "Смесь для плова",
+      "slug": "smes-dlya-plova",
+      "description": "Традиционная смесь зиры, барбариса, кориандра и куркумы для настоящего узбекского плова.",
+      "image": null,
+      "price": "6.50",
+      "weight": "60 г",
+      "origin": "Узбекистан",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "category": 2,
+      "name": "Приправа для стейка",
+      "slug": "priprava-dlya-stejka",
+      "description": "Смесь чёрного перца, паприки, чеснока и розмарина. Идеальна для говяжьего стейка.",
+      "image": null,
+      "price": "7.00",
+      "weight": "70 г",
+      "origin": "Германия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "category": 2,
+      "name": "Хмели-сунели",
+      "slug": "hmeti-suneli",
+      "description": "Грузинская смесь на основе базилика, кинзы, укропа и лаврового листа.",
+      "image": null,
+      "price": "5.50",
+      "weight": "50 г",
+      "origin": "Грузия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "category": 2,
+      "name": "Карри мадрас",
+      "slug": "karri-madras",
+      "description": "Острая индийская смесь карри с куркумой, кориандром и чили.",
+      "image": null,
+      "price": "6.00",
+      "weight": "60 г",
+      "origin": "Индия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "category": 3,
+      "name": "Базилик сушёный",
+      "slug": "bazilik-sushyonyj",
+      "description": "Ароматный итальянский базилик. Незаменим для пиццы, пасты и салатов.",
+      "image": null,
+      "price": "3.50",
+      "weight": "30 г",
+      "origin": "Италия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "category": 3,
+      "name": "Орегано",
+      "slug": "oregano",
+      "description": "Средиземноморский орегано (душица). Классика для пиццы и томатных соусов.",
+      "image": null,
+      "price": "3.50",
+      "weight": "25 г",
+      "origin": "Греция",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "category": 3,
+      "name": "Мята перечная",
+      "slug": "myata-perechnaya",
+      "description": "Освежающая мята для чая, десертов и салатов.",
+      "image": null,
+      "price": "3.00",
+      "weight": "30 г",
+      "origin": "Россия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+      "category": 4,
+      "name": "Зира (кумин)",
+      "slug": "zira-kumin",
+      "description": "Ароматные семена зиры. Обязательный компонент плова, хумуса и мясных блюд.",
+      "image": null,
+      "price": "5.00",
+      "weight": "50 г",
+      "origin": "Индия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+      "category": 5,
+      "name": "Глинтвейн-микс",
+      "slug": "glintvejn-miks",
+      "description": "Пряная смесь для глинтвейна: корица, гвоздика, бадьян, апельсиновая цедра, имбирь.",
+      "image": null,
+      "price": "7.50",
+      "weight": "80 г",
+      "origin": "Германия",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+      "category": 5,
+      "name": "Чай каркаде (суданская роза)",
+      "slug": "chaj-karkade-sudanskaya-roza",
+      "description": "Красный чай из суданской розы. Богат витамином C, обладает кисловато-сладким вкусом.",
+      "image": null,
+      "price": "4.50",
+      "weight": "50 г",
+      "origin": "Судан",
+      "in_stock": true,
+      "created_at": "2026-01-10T10:00:00Z",
+      "updated_at": "2026-01-10T10:00:00Z"
+    }
+  }
+]

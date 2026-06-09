@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Spices Minsk — Каталог специй{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+</head>
+<body>
+
+<header class="header">
+    <div class="header__inner container">
+        <a href="{% url 'catalog:index' %}" class="header__logo">
+            <span class="header__logo-icon">✦</span>
+            <span class="header__logo-text">Spices Minsk</span>
+        </a>
+        <nav class="header__nav">
+            <a href="{% url 'catalog:index' %}" class="header__link">Главная</a>
+            <a href="{% url 'catalog:catalog' %}" class="header__link">Каталог</a>
+            <a href="{% url 'catalog:about' %}" class="header__link">О нас</a>
+            <a href="{% url 'catalog:contacts' %}" class="header__link">Контакты</a>
+        </nav>
+        <button class="header__burger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container footer__grid">
+        <div class="footer__col">
+            <div class="footer__brand">
+                <span class="footer__logo-icon">✦</span>
+                <span class="footer__logo-text">Spices Minsk</span>
+            </div>
+            <p class="footer__desc">Качественные специи и пряности со всего мира. Более 10 лет радуем своих клиентов.</p>
+        </div>
+        <div class="footer__col">
+            <h4 class="footer__title">Навигация</h4>
+            <ul class="footer__links">
+                <li><a href="{% url 'catalog:index' %}">Главная</a></li>
+                <li><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+                <li><a href="{% url 'catalog:about' %}">О нас</a></li>
+                <li><a href="{% url 'catalog:contacts' %}">Контакты</a></li>
+            </ul>
+        </div>
+        <div class="footer__col">
+            <h4 class="footer__title">Категории</h4>
+            <ul class="footer__links">
+                {% for cat in all_categories %}
+                <li><a href="{% url 'catalog:catalog' %}?category={{ cat.slug }}">{{ cat.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footer__col">
+            <h4 class="footer__title">Контакты</h4>
+            <ul class="footer__contacts">
+                <li>г. Минск, ул. Специй, 15</li>
+                <li>+375 (29) 123-45-67</li>
+                <li>info@spicesminsk.by</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__bottom container">
+        <p>&copy; 2026 Spices Minsk. Все права защищены.</p>
+    </div>
+</footer>
+
+<script src="{% static 'catalog/js/main.js' %}"></script>
+</body>
+</html>

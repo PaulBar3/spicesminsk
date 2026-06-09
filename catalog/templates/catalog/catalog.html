@@ -1,0 +1,95 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if current_category %}
+        {{ current_category.name }} — Spices Minsk
+    {% else %}
+        Каталог — Spices Minsk
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero__title">
+            {% if current_category %}
+                {{ current_category.name }}
+            {% else %}
+                Каталог специй
+            {% endif %}
+        </h1>
+        {% if current_category and current_category.description %}
+        <p class="page-hero__desc">{{ current_category.description }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section container">
+    <div class="catalog-layout">
+        <aside class="catalog-sidebar">
+            <h3 class="catalog-sidebar__title">Категории</h3>
+            <ul class="catalog-sidebar__list">
+                <li>
+                    <a href="{% url 'catalog:catalog' %}" class="catalog-sidebar__link {% if not current_category %}active{% endif %}">
+                        Все товары
+                    </a>
+                </li>
+                {% for cat in all_categories %}
+                <li>
+                    <a href="{% url 'catalog:catalog' %}?category={{ cat.slug }}" class="catalog-sidebar__link {% if current_category and current_category.slug == cat.slug %}active{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <div class="catalog-content">
+            {% if products %}
+            <div class="products-grid products-grid--catalog">
+                {% for product in products %}
+                <a href="{{ product.get_absolute_url }}" class="product-card">
+                    <div class="product-card__img-wrap">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__img">
+                        {% else %}
+                        <div class="product-card__placeholder">
+                            <span>✦</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="product-card__body">
+                        <h3 class="product-card__title">{{ product.name }}</h3>
+                        <p class="product-card__price">{{ product.price }} Br</p>
+                        {% if product.weight %}
+                        <span class="product-card__weight">{{ product.weight }}</span>
+                        {% endif %}
+                        {% if product.origin %}
+                        <span class="product-card__origin">{{ product.origin }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category.slug }}{% endif %}" class="pagination__link">← Назад</a>
+                {% endif %}
+                <span class="pagination__current">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category.slug }}{% endif %}" class="pagination__link">Вперёд →</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <p class="empty-msg">В этой категории пока нет товаров.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
