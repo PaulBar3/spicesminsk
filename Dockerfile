@@ -31,4 +31,4 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 8000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["gunicorn", "spicesminsk.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
+CMD ["sh", "-c", "gunicorn spicesminsk.wsgi:application --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4}"]

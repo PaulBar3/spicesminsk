@@ -1,14 +1,32 @@
 from pathlib import Path
+
 from dotenv import load_dotenv
-from os import environ, path
+from os import environ
+
+from django.core.exceptions import ImproperlyConfigured
+
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = environ.get('SECRET_KEY', 'django-insecure-default-dev-key')
-DEBUG = environ.get('DEBUG', 'False').strip().lower() in ('true', '1', 'yes')
-ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').replace(' ', '').split(',')
+
+def _bool_from_env(key: str, default: str = 'False') -> bool:
+    return environ.get(key, default).strip().lower() in ('true', '1', 'yes')
+
+
+SECRET_KEY: str = environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise ImproperlyConfigured(
+        'SECRET_KEY environment variable is not set. '
+        'Copy .env.example to .env and fill in the values.'
+    )
+
+DEBUG: bool = _bool_from_env('DEBUG', 'False')
+
+ALLOWED_HOSTS: list[str] = [
+    h.strip() for h in environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,7 +53,7 @@ ROOT_URLCONF = 'spicesminsk.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +95,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ADMIN_URL = environ.get('ADMIN_URL', 'admin/').strip('/')
+ADMIN_URL: str = environ.get('ADMIN_URL', 'admin/').strip('/')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+}
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
@@ -90,7 +114,7 @@ X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 
-SECURE_SSL_REDIRECT = environ.get('SECURE_SSL_REDIRECT', 'False').strip().lower() in ('true', '1', 'yes')
+SECURE_SSL_REDIRECT = _bool_from_env('SECURE_SSL_REDIRECT', 'False')
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True

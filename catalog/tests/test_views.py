@@ -71,6 +71,56 @@ class TestCatalogView:
         response = client.get(self.url, {'category': cat1.slug})
         assert list(response.context['products']) == [p1]
 
+    def test_invalid_category_slug_returns_200(self, client):
+        response = client.get(self.url, {'category': 'nonexistent'})
+        assert response.status_code == 200
+        assert response.context['current_category'] is None
+
+
+@pytest.mark.django_db
+class TestCategoryView:
+    url_base = reverse('catalog:category', kwargs={'slug': 'test-cat'})
+
+    def test_status_code(self, client):
+        cat = Category.objects.create(name='Test', slug='test-cat')
+        response = client.get(
+            reverse('catalog:category', kwargs={'slug': cat.slug})
+        )
+        assert response.status_code == 200
+
+    def test_template(self, client):
+        Category.objects.create(name='Test', slug='test-cat')
+        response = client.get(self.url_base)
+        assert 'catalog/catalog.html' in [t.name for t in response.templates]
+
+    def test_context_current_category(self, client):
+        cat = Category.objects.create(name='Test', slug='test-cat')
+        response = client.get(
+            reverse('catalog:category', kwargs={'slug': cat.slug})
+        )
+        assert response.context['current_category'] == cat
+
+    def test_filters_by_category(self, client):
+        cat1 = Category.objects.create(name='A', slug='a')
+        cat2 = Category.objects.create(name='B', slug='b')
+        p1 = Product.objects.create(
+            category=cat1, name='Iz A', slug='iz-a', price=1.00
+        )
+        Product.objects.create(
+            category=cat2, name='Iz B', slug='iz-b', price=1.00
+        )
+        response = client.get(
+            reverse('catalog:category', kwargs={'slug': cat1.slug})
+        )
+        assert list(response.context['products']) == [p1]
+
+    def test_404_for_nonexistent_category(self, client):
+        response = client.get(
+            reverse('catalog:category', kwargs={'slug': 'no-such-slug'})
+        )
+        assert response.status_code == 200
+        assert list(response.context['products']) == []
+
 
 @pytest.mark.django_db
 class TestProductDetailView:

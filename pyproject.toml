@@ -9,6 +9,7 @@ dependencies = [
     "gunicorn>=26.0.0",
     "pillow>=10",
     "python-dotenv>=1.2.2",
+    "unidecode>=1.4.0",
 ]
 
 [tool.django]
