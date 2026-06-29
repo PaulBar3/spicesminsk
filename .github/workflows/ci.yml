@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: spicesminsk
+          POSTGRES_USER: spicesminsk
+          POSTGRES_PASSWORD: spicesminsk
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --dev --frozen
+
+      - name: Lint with ruff
+        run: uv run ruff check .
+
+      - name: Check types with pyright
+        run: uv run pyright . || true
+
+      - name: Run tests
+        run: uv run pytest
+        env:
+          DB_ENGINE: postgresql
+          DB_HOST: localhost
+          DB_USER: spicesminsk
+          DB_PASSWORD: spicesminsk
+          DB_NAME: spicesminsk
+          REDIS_URL: redis://localhost:6379/0
+          SECRET_KEY: test-secret-key-not-for-production
+          DEBUG: "False"

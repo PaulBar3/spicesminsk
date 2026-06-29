@@ -11,6 +11,10 @@ RUN uv run python manage.py collectstatic --noinput
 
 FROM python:3.13-slim-bookworm
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN groupadd -r django && useradd -r -g django django
 
 WORKDIR /app
@@ -31,4 +35,4 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 8000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["sh", "-c", "gunicorn spicesminsk.wsgi:application --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4}"]
+CMD gunicorn spicesminsk.wsgi:application --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-$(( 2 * $(nproc) + 1 ))}

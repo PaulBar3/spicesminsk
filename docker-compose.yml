@@ -1,16 +1,51 @@
 services:
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME:-spicesminsk}
+      POSTGRES_USER: ${DB_USER:-spicesminsk}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-spicesminsk}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-spicesminsk} -d ${DB_NAME:-spicesminsk}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   web:
     build: .
     env_file:
       - .env
     environment:
       - DEBUG=False
+      - DB_ENGINE=postgresql
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME:-spicesminsk}
+      - DB_USER=${DB_USER:-spicesminsk}
+      - DB_PASSWORD=${DB_PASSWORD:-spicesminsk}
+      - REDIS_URL=redis://redis:6379/0
     volumes:
       - data:/app/data
       - media:/app/media
       - static_volume:/app/static
     expose:
       - '8000'
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   nginx:
@@ -25,6 +60,7 @@ services:
     restart: unless-stopped
 
 volumes:
+  postgres_data:
   data:
   media:
   static_volume:

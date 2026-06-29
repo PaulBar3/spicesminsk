@@ -1,5 +1,4 @@
 .venv/
-.venv/
 __pycache__/
 *.pyc
 .git/
@@ -12,3 +11,4 @@ media/
 .idea/
 .vscode/
 README.md
+.github/
