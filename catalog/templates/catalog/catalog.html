@@ -1,5 +1,5 @@
 {% extends 'catalog/base.html' %}
-{% load static %}
+{% load static catalog_tags %}
 
 {% block title %}
     {% if current_category %}
@@ -61,7 +61,7 @@
                     </div>
                     <div class="product-card__body">
                         <h3 class="product-card__title">{{ product.name }}</h3>
-                        <p class="product-card__price">{{ product.price }} Br</p>
+                        <p class="product-card__price">{{ product.price|byn }}</p>
                         {% if product.weight %}
                         <span class="product-card__weight">{{ product.weight }}</span>
                         {% endif %}
